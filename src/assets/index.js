@@ -4,12 +4,12 @@ import logo6 from "./logo (6).svg";
 
 import videoBack from "./back.webm";
 
-import category1 from "./categories/Image (5).svg";
-import category2 from "./categories/Image (6).svg";
-import category3 from "./categories/Image (7).svg";
-import category4 from "./categories/Image (8).svg";
-import category5 from "./categories/Image (9).svg";
-import category6 from "./categories/Image (10).svg";
+import category1 from "./categories/Image (5).webp";
+import category2 from "./categories/Image (6).webp";
+import category3 from "./categories/Image (7).webp";
+import category4 from "./categories/Image (8).webp";
+import category5 from "./categories/Image (9).webp";
+import category6 from "./categories/Image (10).webp";
 
 // Icons
 
