@@ -1,63 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { event1 } from "../../../assets";
 import Button from "../../atoms/Button";
 import EventCard from "../../molecules/EventCard";
-
-const dummyEvents = [
-  {
-    image: event1,
-    title: "Lakeside Camping at Pawna",
-    category: "Travel & Adventure",
-    date: "NOV 25 - 26",
-    location: "Adventure Geek - Explore the Unexplored...",
-    price: "ُEGP 1,400",
-    interested: 14,
-  },
-  {
-    image: event1,
-    title: "Sound Of Christmas 2023",
-    category: "Cultural & Arts",
-    date: "MAY 28",
-    location: "Bal Gandharva Rang Mandir, Mumbai",
-    price: "EGP 499",
-    interested: 16,
-  },
-  {
-    image: event1,
-    title: "Meet the Royal College of Art in Mumbai 2023",
-    category: "Educational & Business",
-    date: "DEC 02",
-    location: "Sofitel Mumbai BKC, Mumbai",
-    price: "FREE",
-    interested: 16,
-  },
-  {
-    image: event1,
-    title: "Meet the Royal College of Art in Mumbai 2023",
-    category: "Educational & Business",
-    date: "MAR 13",
-    location: "Sofitel Mumbai BKC, Mumbai",
-    price: "FREE",
-  },
-  {
-    image: event1,
-    title: "Meet the Royal College of Art in Mumbai 2023",
-    category: "Educational & Business",
-    date: "FEB 22 - 24",
-    location: "Sofitel Mumbai BKC, Mumbai",
-    price: "EGP 999",
-    interested: 3,
-  },
-  {
-    image: event1,
-    title: "Meet the Royal College of Art in Mumbai 2023",
-    category: "Educational & Business",
-    date: "JAN 09",
-    location: "Sofitel Mumbai BKC, Mumbai",
-    price: "FREE",
-    interested: 126,
-  },
-];
 
 const PopularEvents = ({ events, title }) => {
   const navigate = useNavigate();
