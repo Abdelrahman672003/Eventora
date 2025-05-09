@@ -4,7 +4,7 @@ import { Sun, SunMoon } from "lucide-react";
 
 const ThemeToggle = ({ isDark, setIsDark }) => {
   return (
-    <button onClick={() => setIsDark(!isDark)} className="p-2 cursor-pointer">
+    <button onClick={() => setIsDark(!isDark)} className="mr-2 cursor-pointer">
       {isDark ? (
         <Sun className="text-white" />
       ) : (

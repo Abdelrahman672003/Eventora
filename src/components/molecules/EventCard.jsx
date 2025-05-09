@@ -1,35 +1,93 @@
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
+import { useEventService } from "../../api/services";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
+  const { makeFavoriteEvent, removeFavoriteEvent } = useEventService();
+  const [isFavorite, setIsFavorite] = useState(event.isFavorite || false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFavorite = async (e) => {
+    e.stopPropagation();
+    if (isLoading) return;
+
+    setIsLoading(true);
+    try {
+      if (isFavorite) {
+        await removeFavoriteEvent(event.id);
+      } else {
+        await makeFavoriteEvent(event.id);
+      }
+      setIsFavorite(!isFavorite);
+      toast.success(
+        isFavorite ? "Removed from favorites" : "Added to favorites",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
+          closeButton: false,
+        }
+      );
+    } catch (err) {
+      console.error("Failed to update favorite status:", err);
+      toast.error("Failed to update favorite status", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
+        closeButton: false,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden w-full md:max-w-sm">
       <div className="relative h-40">
         <img
           src={event.image}
-          alt={event.title}
+          alt={event.name}
           className="object-cover w-full h-full"
         />
         <span className="absolute top-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
           {event.category}
         </span>
-        <button className="absolute top-2 right-2 bg-white/80 backdrop-blur rounded-full p-1">
-          <Star size={16} className="text-gray-600 cursor-pointer" />
+        <button 
+          className="absolute top-2 right-2 bg-white/80 backdrop-blur rounded-full p-1"
+          onClick={handleFavorite}
+          disabled={isLoading}
+        >
+          <Star 
+            size={16} 
+            className={`${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'} cursor-pointer`} 
+          />
         </button>
       </div>
 
       <div
         className="p-4 cursor-pointer"
-        onClick={() => navigate(`/events/${1}`)}
+        onClick={() => navigate(`/events/${event.id}`)}
       >
         <div className="text-sm text-gray-500 font-bold mb-1">{event.date}</div>
         <h3 className="text-md font-semibold text-black dark:text-white truncate">
-          {event.title}
+          {event.name}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-300 truncate">
-          {event.location}
+          {event.venue}
         </p>
         <div className="text-xs text-gray-500 mt-2 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -43,7 +101,7 @@ const EventCard = ({ event }) => {
           </div>
           <Button
             className="bg-primary text-white dark:bg-secondary dark:text-primary"
-            onClick={() => navigate(`/events/${1}`)}
+            onClick={() => navigate(`/events/${event.id}`)}
           >
             See More
           </Button>
