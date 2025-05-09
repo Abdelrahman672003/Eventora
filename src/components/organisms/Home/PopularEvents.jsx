@@ -59,14 +59,14 @@ const dummyEvents = [
   },
 ];
 
-const PopularEvents = () => {
+const PopularEvents = ({ events, title }) => {
   const navigate = useNavigate();
   return (
     <section className="py-12 bg-white dark:bg-gray-900">
       <div className="max-w-[1200px] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold text-start text-primary dark:text-white">
-            Popular Events In Egypt
+            {title}
           </h2>
           <Button
             className="bg-primary text-white px-8 dark:bg-secondary dark:text-primary"
@@ -76,7 +76,7 @@ const PopularEvents = () => {
           </Button>
         </div>
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-          {dummyEvents.map((event, idx) => (
+          {events?.map((event, idx) => (
             <EventCard key={idx} event={event} />
           ))}
         </div>

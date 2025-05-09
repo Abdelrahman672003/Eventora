@@ -107,7 +107,7 @@ const EventCardSmall = ({
   };
 
   return (
-    <div className="flex gap-3 bg-white dark:bg-gray-800 rounded shadow">
+    <div className="flex gap-3 bg-white dark:bg-gray-800 rounded shadow-md">
       <div
         className="relative cursor-pointer"
         onClick={() => navigate(`/events/${event.id}`)}
@@ -117,17 +117,17 @@ const EventCardSmall = ({
           alt={event.name}
           className="w-46 h-full object-cover rounded"
         />
-        <span className="absolute top-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
+        <span className="absolute bottom-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
           {event.category}
         </span>
         {event.isBooked || isBooked ? (
-          <span className="absolute top-10 left-2 text-xs bg-green-600 text-white px-2 py-1 rounded">
+          <span className="absolute top-2 left-2 text-xs bg-green-600 text-white px-2 py-1 rounded">
             Booked
           </span>
         ) : (
           ""
         )}
-        {showFavoriteButton && (
+        {showFavoriteButton && localStorage.getItem("user") && (
           <button
             className="absolute top-2 right-2 bg-white/80 backdrop-blur rounded-full p-1"
             onClick={handleFavorite}
@@ -142,10 +142,10 @@ const EventCardSmall = ({
           </button>
         )}
       </div>
-      <div className="flex flex-col p-4 justify-between w-4/6">
+      <div className="flex flex-col p-4 pl-3 justify-between w-4/6">
         <div>
           <h3
-            className="font-semibold text-sm mb-1 line-clamp-2 dark:text-white cursor-pointer"
+            className="font-semibold text-md mb-1 line-clamp-2 dark:text-white cursor-pointer"
             onClick={() => navigate(`/events/${event.id}`)}
           >
             {event.name}
@@ -155,6 +155,14 @@ const EventCardSmall = ({
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
             {event.venue}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+            {event.interestedCount && (
+              <span className="flex items-center gap-1">
+                <Star size={14} className="text-purple-500" />
+                {event.interestedCount} interested
+              </span>
+            )}
           </p>
         </div>
         <div className="flex justify-between items-center">

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+// const baseURL = "https://valid-toma-eventora-c540447c.koyeb.app/api";
+  const baseURL =
+    import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 const axiosInstance = axios.create({
   baseURL,
@@ -34,7 +36,7 @@ axiosInstance.interceptors.response.use(
     ) {
       // Handle unauthorized access
       localStorage.removeItem("token");
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }

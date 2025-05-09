@@ -3,13 +3,17 @@ import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
 import { useEventService } from "../../api/services";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
   const { makeFavoriteEvent, removeFavoriteEvent } = useEventService();
   const [isFavorite, setIsFavorite] = useState(event.isFavorite || false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(event.isFavorite || false);
+  }, [event]);
 
   const handleFavorite = async (e) => {
     e.stopPropagation();
@@ -57,7 +61,10 @@ const EventCard = ({ event }) => {
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden w-full md:max-w-sm">
-      <div className="relative h-40">
+      <div
+        className="relative h-40 cursor-pointer"
+        onClick={() => navigate(`/events/${event.id}`)}
+      >
         <img
           src={event.image}
           alt={event.name}
@@ -66,23 +73,29 @@ const EventCard = ({ event }) => {
         <span className="absolute top-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
           {event.category}
         </span>
-        <button 
-          className="absolute top-2 right-2 bg-white/80 backdrop-blur rounded-full p-1"
-          onClick={handleFavorite}
-          disabled={isLoading}
-        >
-          <Star 
-            size={16} 
-            className={`${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'} cursor-pointer`} 
-          />
-        </button>
+        {localStorage.getItem("user") && (
+          <button
+            className="absolute top-2 right-2 bg-white/80 backdrop-blur rounded-full p-1"
+            onClick={handleFavorite}
+            disabled={isLoading}
+          >
+            <Star
+              size={16}
+              className={`${
+                isFavorite ? "fill-yellow-400 text-yellow-400" : "text-gray-600"
+              } cursor-pointer`}
+            />
+          </button>
+        )}
       </div>
 
       <div
         className="p-4 cursor-pointer"
         onClick={() => navigate(`/events/${event.id}`)}
       >
-        <div className="text-sm text-gray-500 font-bold mb-1">{event.date}</div>
+        <div className="text-sm text-gray-500 font-bold mb-1">
+          {event.date?.split("T")[0]}
+        </div>
         <h3 className="text-md font-semibold text-black dark:text-white truncate">
           {event.name}
         </h3>
@@ -91,11 +104,11 @@ const EventCard = ({ event }) => {
         </p>
         <div className="text-xs text-gray-500 mt-2 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <span>{event.price}</span>
-            {event.interested && (
+            <span>EGP {event.price}</span>
+            {event.interestedCount && (
               <span className="flex items-center gap-1">
                 <Star size={14} className="text-purple-500" />
-                {event.interested} interested
+                {event.interestedCount} interested
               </span>
             )}
           </div>

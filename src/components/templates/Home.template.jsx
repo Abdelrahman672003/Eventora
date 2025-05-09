@@ -4,16 +4,23 @@ import ExploreCategories from "../organisms/Home/ExploreCategories";
 import PopularEvents from "../organisms/Home/PopularEvents";
 import PremiumLoginSection from "../molecules/PremiumLoginSection";
 
-const HomeTemplate = () => {
+const HomeTemplate = ({ techEvents, sportsEvents, businessEvents }) => {
   return (
     <div>
       <main className="">
         <HeroSection />
         <div className="px-6 md:px-10">
           <ExploreCategories />
-          <PopularEvents />
+          {techEvents?.length > 0 && (
+            <PopularEvents events={techEvents} title="Top Technology Events" />
+          )}
           <PremiumLoginSection />
-          <PopularEvents />
+          {sportsEvents?.length > 0 && (
+            <PopularEvents events={sportsEvents} title="Top Sports Events" />
+          )}
+          {businessEvents?.length > 0 && (
+            <PopularEvents events={businessEvents} title="Top Business Events" />
+          )}
         </div>
       </main>
     </div>
