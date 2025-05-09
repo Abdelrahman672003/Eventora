@@ -12,7 +12,7 @@ const EventCard = ({ event }) => {
           alt={event.title}
           className="object-cover w-full h-full"
         />
-        <span className="absolute top-2 left-2 text-xs bg-yellow-400 text-black px-2 py-1 rounded">
+        <span className="absolute top-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
           {event.category}
         </span>
         <button className="absolute top-2 right-2 bg-white/80 backdrop-blur rounded-full p-1">

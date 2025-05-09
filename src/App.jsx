@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import AppRoutes from "./routes/AppRoutes";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Signup from "./pages/Signup";
+import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<AppRoutes />} />
-          <Route path="/register" element={<Signup />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { logo5 } from "../../assets";
 import { useNavigate } from "react-router-dom";
 
-const LoginTemplate = ({
+const RegisterTemplate = ({
   formData,
   handleChange,
   handleSubmit,
@@ -11,6 +11,7 @@ const LoginTemplate = ({
   error,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -23,21 +24,31 @@ const LoginTemplate = ({
         />
         <img src={logo5} alt="Eventify Logo" className="h-28" />
         <p className="text-xl font-semibold mt-4 mb-2 leading-tight">
-          Welcome back.
+          Join Eventora
         </p>
-        <p className="text-lg">Log in to explore your favorite events again!</p>
+        <p className="text-lg">Create an account to start exploring events!</p>
       </div>
 
       {/* Right Side */}
       <div className="flex-1 flex items-center justify-center p-6 bg-white rounded-t-3xl md:rounded-none">
         <div className="w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-6">Login to Your Account</h2>
+          <h2 className="text-2xl font-bold mb-6">Create Your Account</h2>
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-500 rounded-lg text-sm">
               {error}
             </div>
           )}
           <form className="space-y-4">
+            {/* Name */}
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Full Name"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary shadow-sm placeholder-gray-400 transition"
+            />
+
             {/* Email */}
             <input
               type="email"
@@ -66,6 +77,24 @@ const LoginTemplate = ({
               </span>
             </div>
 
+            {/* Confirm Password */}
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm Password"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm pr-10 focus:outline-none focus:ring-2 focus:ring-secondary shadow-sm placeholder-gray-400 transition"
+              />
+              <span
+                className="absolute right-3 top-3.5 text-gray-400 cursor-pointer"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </span>
+            </div>
+
             <button
               disabled={loading}
               className="w-full bg-gray-900 text-white py-3 rounded-xl font-medium hover:bg-primary transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
@@ -76,18 +105,18 @@ const LoginTemplate = ({
                   <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
                 </div>
               ) : (
-                "Log In"
+                "Create Account"
               )}
             </button>
           </form>
 
-          <p className="text-sm text-center mt-4 text-gray-600">
-            Don't have an account?{" "}
+          <p className="text-sm text-center mt-4 text-gray-600 ">
+            Already have an account?{" "}
             <span
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/login")}
               className="text-blue-500 hover:underline cursor-pointer"
             >
-              Create one
+              Log in
             </span>
           </p>
         </div>
@@ -96,4 +125,4 @@ const LoginTemplate = ({
   );
 };
 
-export default LoginTemplate;
+export default RegisterTemplate;

@@ -75,12 +75,12 @@ const EventDetailsTemplate = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white pb-10 pt-28 max-w-[1200px] mx-auto px-10">
+    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white pb-10 pt-28 max-w-[1200px] mx-auto px-6 md:px-10">
       {/* Banner */}
       <img
         src={event.image}
         alt={event.title}
-        className="w-full h-90 object-cover rounded-lg"
+        className="w-full h-60 md:h-90 object-cover rounded-lg"
       />
 
       {/* Title & Actions */}
@@ -112,7 +112,7 @@ const EventDetailsTemplate = () => {
         {/* Ticket Info */}
         <div className="mt-6 md:mt-0">
           <Button
-            className="bg-primary text-white dark:bg-secondary dark:text-primary px-8 text-xl"
+            className="bg-primary text-white dark:bg-secondary dark:text-primary px-8 text-xl w-full md:w-auto m-0"
             onClick={handleBooking}
           >
             Book Now

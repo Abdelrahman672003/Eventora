@@ -3,83 +3,9 @@ import HeroSection from "../organisms/Home/HeroSection";
 import ExploreCategories from "../organisms/Home/ExploreCategories";
 import PopularEvents from "../organisms/Home/PopularEvents";
 import EventCardSmall from "../molecules/EventCardSmall";
-import { event1 } from "../../assets";
 import { ChevronDown } from "lucide-react";
 
-const EventsTemplate = () => {
-  const dummyEvents = [
-    {
-      title: "Delhi 6 - Traditional Food from Delhi Street",
-      image: event1,
-      date: "Nov 23 - 29 | 7 PM - 11 PM",
-      location: "Chengalpattu, India",
-      price: "EGP 1200",
-    },
-    {
-      title: "Startup Talks - Innovative event for founders",
-      image: event1,
-      date: "Dec 17 | 3 PM - 6 PM",
-      location: "New Delhi, India",
-      price: "FREE",
-    },
-    {
-      title: "Delhi 6 - Traditional Food from Delhi Street",
-      image: event1,
-      date: "Nov 23 - 29 | 7 PM - 11 PM",
-      location: "Chengalpattu, India",
-      price: "EGP 1200",
-    },
-    {
-      title: "Startup Talks - Innovative event for founders",
-      image: event1,
-      date: "Dec 17 | 3 PM - 6 PM",
-      location: "New Delhi, India",
-      price: "FREE",
-    },
-    {
-      title: "Delhi 6 - Traditional Food from Delhi Street",
-      image: event1,
-      date: "Nov 23 - 29 | 7 PM - 11 PM",
-      location: "Chengalpattu, India",
-      price: "EGP 1200",
-    },
-    {
-      title: "Startup Talks - Innovative event for founders",
-      image: event1,
-      date: "Dec 17 | 3 PM - 6 PM",
-      location: "New Delhi, India",
-      price: "FREE",
-    },
-    {
-      title: "Delhi 6 - Traditional Food from Delhi Street",
-      image: event1,
-      date: "Nov 23 - 29 | 7 PM - 11 PM",
-      location: "Chengalpattu, India",
-      price: "EGP 1200",
-    },
-    {
-      title: "Startup Talks - Innovative event for founders",
-      image: event1,
-      date: "Dec 17 | 3 PM - 6 PM",
-      location: "New Delhi, India",
-      price: "FREE",
-    },
-    {
-      title: "Delhi 6 - Traditional Food from Delhi Street",
-      image: event1,
-      date: "Nov 23 - 29 | 7 PM - 11 PM",
-      location: "Chengalpattu, India",
-      price: "EGP 1200",
-    },
-    {
-      title: "Startup Talks - Innovative event for founders",
-      image: event1,
-      date: "Dec 17 | 3 PM - 6 PM",
-      location: "New Delhi, India",
-      price: "FREE",
-    },
-  ];
-
+const EventsTemplate = ({ events = [], loading, error }) => {
   return (
     <div>
       <main>
@@ -188,11 +114,25 @@ const EventsTemplate = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {dummyEvents.map((event, idx) => (
-                  <EventCardSmall key={idx} event={event} />
-                ))}
-              </div>
+              {loading ? (
+                <div className="flex justify-center items-center h-64">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                </div>
+              ) : error ? (
+                <div className="text-center text-red-500 p-4">
+                  Error loading events. Please try again later.
+                </div>
+              ) : events?.length === 0 ? (
+                <div className="text-center text-gray-500 p-4">
+                  No events found.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {events?.map((event, idx) => (
+                    <EventCardSmall key={event.id || idx} event={event} />
+                  ))}
+                </div>
+              )}
             </section>
           </div>
         </div>

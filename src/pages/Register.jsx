@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { LoginTemplate } from "../components";
+import { RegisterTemplate } from "../components";
 import { useAuthService } from "../api/services";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [formError, setFormError] = useState("");
   const navigate = useNavigate();
-  const { login, loading, error } = useAuthService();
+  const { signup, loading, error } = useAuthService();
 
   useEffect(() => {
-    document.title = "Eventora - Login";
+    document.title = "Eventora - Register";
   }, []);
 
   const handleChange = (e) => {
@@ -29,18 +31,29 @@ const Login = () => {
     e.preventDefault();
     setFormError("");
 
-    if (!formData.email || !formData.password) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setFormError("Please fill in all fields");
       return;
     }
 
+    if (formData.password !== formData.confirmPassword) {
+      setFormError("Passwords do not match");
+      return;
+    }
+
     try {
-      const response = await login(formData);
+      const { confirmPassword, ...signupData } = formData;
+      const response = await signup(signupData);
       if (response.token) {
-        navigate("/");
+        navigate("/login");
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response.user));
-        toast.success("Login successful...", {
+        toast.success("Registration successful. Please login to continue.", {
           position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: true,
@@ -54,13 +67,13 @@ const Login = () => {
       }
     } catch (err) {
       setFormError(
-        err.response?.data?.message || "Login failed. Please try again."
+        err.response?.data?.message || "Registration failed. Please try again."
       );
     }
   };
 
   return (
-    <LoginTemplate
+    <RegisterTemplate
       formData={formData}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
@@ -70,4 +83,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
