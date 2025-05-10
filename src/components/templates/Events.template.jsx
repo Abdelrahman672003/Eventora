@@ -26,8 +26,8 @@ const EventsTemplate = ({
   return (
     <div>
       <main>
-        <HeroSection title={"Search For A Specific Event"} eventsPage />
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+        {/* <HeroSection title={"Search For A Specific Event"} eventsPage /> */}
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 pt-30">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <aside className="md:col-span-1">
               <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
