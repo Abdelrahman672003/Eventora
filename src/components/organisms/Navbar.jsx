@@ -35,7 +35,17 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    toast.success("Logged out successfully");
+    toast.success("Logged out successfully", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
+      closeButton: false,
+    });
   };
 
   const handleMobileMenuClick = () => {
