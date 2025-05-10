@@ -118,7 +118,7 @@ const Navbar = () => {
           >
             Contact
           </Link>
-          {JSON.parse(localStorage.getItem("user"))?.role == "user" && (
+          {localStorage.getItem("user") && (
             <Link
               to="/profile"
               className={
