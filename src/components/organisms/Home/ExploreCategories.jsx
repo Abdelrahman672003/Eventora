@@ -51,13 +51,13 @@ const ExploreCategories = () => {
           >
             <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden shadow-md hover:shadow-2xl">
               <img
-                src={category.image}
-                alt={category.title}
+                src={category?.image}
+                alt={category?.title}
                 className="w-full h-full object-cover"
               />
             </div>
             <span className="mt-2 text-sm md:text-base font-medium text-primary dark:text-white">
-              {category.title}
+              {category?.title}
             </span>
           </div>
         ))}

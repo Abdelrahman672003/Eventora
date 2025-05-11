@@ -6,14 +6,14 @@ import {
   Edit,
   MapPin,
   Clock,
-  DollarSign,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DeleteEventModal from "../modals/DeleteEventModal";
 import { toast } from "react-toastify";
 
-const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
+const DashboardTemplate = ({ events = [], loading, error, deleteEvent, fetchEvents }) => {
   const navigate = useNavigate();
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -40,8 +40,8 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
         theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
         closeButton: false,
       });
-      // Refresh the events list
-      window.location.reload();
+
+      fetchEvents();
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data?.message || "Failed to delete event", {
@@ -65,7 +65,6 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-30 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -84,7 +83,6 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
           </button>
         </div>
 
-        {/* Events Table */}
         <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center items-center h-64">
@@ -126,7 +124,7 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {events.map((event) => (
                     <tr
-                      key={event.id}
+                      key={event?.id}
                       className="hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -134,16 +132,16 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
                               className="h-10 w-10 rounded-lg object-cover"
-                              src={event.image}
-                              alt={event.name}
+                              src={event?.image}
+                              alt={event?.name}
                             />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900 dark:text-white">
-                              {event.name}
+                              {event?.name}
                             </div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
-                              {event.category}
+                              {event?.category}
                             </div>
                           </div>
                         </div>
@@ -151,39 +149,39 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center text-sm text-gray-900 dark:text-white">
                           <Calendar className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" />
-                          {event.date}
+                          {event?.date?.split("T")?.at(0)}
                         </div>
                         <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
                           <Clock className="h-4 w-4 mr-2" />
-                          {event.time}
+                          {event?.time}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center text-sm text-gray-900 dark:text-white">
                           <MapPin className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" />
-                          {event.venue}
+                          {event?.venue}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center text-sm text-gray-900 dark:text-white">
-                          EGP {event.price}
+                          EGP {event?.price}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
                           className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            event.availableTickets > 1
+                            event?.availableTickets > 1
                               ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
                               : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400"
                           }`}
                         >
-                          {event.availableTickets}
+                          {event?.availableTickets}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
                           onClick={() =>
-                            navigate(`/dashboard/update/${event.id}`)
+                            navigate(`/dashboard/update/${event?.id}`)
                           }
                           className="text-primary hover:text-primary/80 mr-4 cursor-pointer"
                         >
@@ -205,7 +203,6 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent }) => {
         </div>
       </div>
 
-      {/* Delete Confirmation Modal */}
       <DeleteEventModal
         isOpen={isDeleteModalOpen}
         onClose={() => {

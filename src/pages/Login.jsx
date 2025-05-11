@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [formError, setFormError] = useState("");
-  const navigate = useNavigate();
   const { login, loading, error } = useAuthService();
 
   useEffect(() => {
@@ -55,6 +55,20 @@ const Login = () => {
     } catch (err) {
       setFormError(
         err.response?.data?.message || "Login failed. Please try again."
+      );
+      toast.error(
+        err.response?.data?.message || "Login failed. Please try again.",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
+          closeButton: false,
+        }
       );
     }
   };

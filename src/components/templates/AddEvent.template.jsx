@@ -18,12 +18,10 @@ const AddEventTemplate = ({
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Create a preview URL for the selected image
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
       console.log(file);
 
-      // Update form data with the file
       handleChange({
         target: {
           name: "image",
@@ -36,7 +34,6 @@ const AddEventTemplate = ({
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-30 pb-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => navigate(-1)}
@@ -55,7 +52,6 @@ const AddEventTemplate = ({
           </p>
         </div>
 
-        {/* Form */}
         <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-6">
           {error && (
             <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg">
@@ -64,7 +60,6 @@ const AddEventTemplate = ({
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name */}
             <div>
               <label
                 htmlFor="name"
@@ -91,7 +86,6 @@ const AddEventTemplate = ({
               )}
             </div>
 
-            {/* Description */}
             <div>
               <label
                 htmlFor="description"
@@ -120,7 +114,6 @@ const AddEventTemplate = ({
               )}
             </div>
 
-            {/* Date and Time */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label
@@ -172,7 +165,6 @@ const AddEventTemplate = ({
               </div>
             </div>
 
-            {/* Venue */}
             <div>
               <label
                 htmlFor="venue"
@@ -199,7 +191,6 @@ const AddEventTemplate = ({
               )}
             </div>
 
-            {/* Category and Price */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label
@@ -269,7 +260,6 @@ const AddEventTemplate = ({
               </div>
             </div>
 
-            {/* Total Tickets */}
             <div>
               <label
                 htmlFor="totalTickets"
@@ -300,7 +290,6 @@ const AddEventTemplate = ({
               )}
             </div>
 
-            {/* Image Upload */}
             <div>
               <label
                 htmlFor="image"
@@ -370,7 +359,6 @@ const AddEventTemplate = ({
               )}
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-end space-x-4">
               <button
                 type="submit"

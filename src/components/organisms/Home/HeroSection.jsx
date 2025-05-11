@@ -1,5 +1,5 @@
 import { videoBack } from "../../../assets";
-import SearchBar from "../../atoms/SearchBar";
+import { SearchBar } from "../../index";
 
 const HeroSection = ({
   title = "Discover and Book the Best Events Around You",
@@ -8,7 +8,6 @@ const HeroSection = ({
 }) => {
   return (
     <div className={`relative w-full min-h-[300px] overflow-hidden`}>
-      {/* Background Video */}
       {!eventsPage ? (
         <video
           autoPlay
@@ -24,7 +23,6 @@ const HeroSection = ({
         ""
       )}
 
-      {/* Foreground Content */}
       <div
         className={`pt-40 px-10 md:px-20 py-16 relative z-10 flex flex-col items-center justify-center text-white text-center ${
           eventsPage

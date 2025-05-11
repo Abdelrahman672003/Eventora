@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../atoms/Button";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../index";
 
 const NotFoundTemplate = () => {
   const navigate = useNavigate()

@@ -3,8 +3,9 @@ import { EventsTemplate } from "../components";
 import { useEventService } from "../api/services";
 
 const Events = () => {
-  const [events, setEvents] = useState([]);
   const { getEvents, loading, error } = useEventService();
+
+  const [events, setEvents] = useState([]);
   const [filters, setFilters] = useState({
     category: [],
     minPrice: "",
@@ -13,31 +14,23 @@ const Events = () => {
   });
 
   const removeAllFilters = () => {
-    setFilters({
-      category: [],
-      minPrice: "",
-      maxPrice: "",
-      search: "",
-    });
-    fetchEvents();
+    fetchEvents(true);
   };
 
   useEffect(() => {
     document.title = "Eventora - Events";
     fetchEvents();
-  }, []); // Only fetch on initial load
+  }, []);
 
   const fetchEvents = async () => {
     try {
-      // Convert filters to API parameters
       const params = {
-        category: filters.category,
-        minPrice: filters.minPrice,
-        maxPrice: filters.maxPrice,
-        search: filters.search,
+        category: filters?.category,
+        minPrice: filters?.minPrice,
+        maxPrice: filters?.maxPrice,
+        search: filters?.search,
       };
 
-      // Remove empty parameters
       Object.keys(params).forEach((key) => {
         if (!params[key]) {
           delete params[key];
@@ -65,10 +58,6 @@ const Events = () => {
     }));
   };
 
-  const handleApplyFilters = () => {
-    fetchEvents();
-  };
-
   return (
     <EventsTemplate
       events={events}
@@ -77,7 +66,7 @@ const Events = () => {
       filters={filters}
       onFilterChange={handleFilterChange}
       onSearch={handleSearch}
-      onApplyFilters={handleApplyFilters}
+      onApplyFilters={fetchEvents}
       removeAllFilters={removeAllFilters}
     />
   );

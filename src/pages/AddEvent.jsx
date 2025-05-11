@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import AddEventTemplate from "../components/templates/AddEvent.template";
 import { useEventService } from "../api/services";
 import { toast } from "react-toastify";
+import { AddEventTemplate } from "../components";
 
 const AddEvent = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const AddEvent = () => {
     createEvent,
     updateEvent,
     getEventById,
-    deleteEvent,
     loading,
     error,
   } = useEventService();
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -28,18 +28,15 @@ const AddEvent = () => {
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     document.title = eventId ? "Eventora - Edit Event" : "Eventora - Add Event";
 
-    // Check if user is authenticated
     const user = localStorage.getItem("user");
     if (!user) {
       navigate("/login");
     }
 
-    // If eventId exists, fetch event data
     if (eventId) {
       fetchEventData();
     }
@@ -57,7 +54,7 @@ const AddEvent = () => {
         category: event.category,
         price: event.price,
         totalTickets: event.totalTickets,
-        image: null, // We don't set the image as it's already uploaded
+        image: null,
       });
       setImagePreview(event.image);
     } catch (err) {
@@ -72,7 +69,6 @@ const AddEvent = () => {
         theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
         closeButton: false,
       });
-      // navigate("/dashboard");
     }
   };
 
@@ -81,7 +77,6 @@ const AddEvent = () => {
     const now = new Date();
     const selectedDateTime = new Date(`${formData.date}T${formData.time}`);
 
-    // Name validation
     if (!formData.name.trim()) {
       errors.name = "Name is required";
     } else if (formData.name.length < 3) {
@@ -90,7 +85,6 @@ const AddEvent = () => {
       errors.name = "Name must be less than 100 characters";
     }
 
-    // Description validation
     if (!formData.description.trim()) {
       errors.description = "Description is required";
     } else if (formData.description.length < 10) {
@@ -99,7 +93,6 @@ const AddEvent = () => {
       errors.description = "Description must be less than 1000 characters";
     }
 
-    // Date and Time validation
     if (!formData.date) {
       errors.date = "Date is required";
     } else if (selectedDateTime <= now) {
@@ -110,26 +103,22 @@ const AddEvent = () => {
       errors.time = "Time is required";
     }
 
-    // Venue validation
     if (!formData.venue.trim()) {
       errors.venue = "Venue is required";
     } else if (formData.venue.length < 3) {
       errors.venue = "Venue must be at least 3 characters long";
     }
 
-    // Category validation
     if (!formData.category) {
       errors.category = "Category is required";
     }
 
-    // Price validation
     if (!formData.price) {
       errors.price = "Price is required";
     } else if (isNaN(formData.price) || parseFloat(formData.price) < 0) {
       errors.price = "Price must be a positive number";
     }
 
-    // Total Tickets validation
     if (!formData.totalTickets) {
       errors.totalTickets = "Total tickets is required";
     } else if (
@@ -141,11 +130,9 @@ const AddEvent = () => {
       errors.totalTickets = "Total tickets cannot exceed 10,000";
     }
 
-    // Image validation (only for new events)
     if (!eventId && !formData.image) {
       errors.image = "Event image is required";
     } else if (formData.image && formData.image.size > 5 * 1024 * 1024) {
-      // 5MB
       errors.image = "Image size must be less than 5MB";
     } else if (
       formData.image &&
@@ -166,7 +153,6 @@ const AddEvent = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear validation error when user starts typing
     if (validationErrors[name]) {
       setValidationErrors((prev) => ({
         ...prev,
@@ -242,37 +228,6 @@ const AddEvent = () => {
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      await deleteEvent(eventId);
-      toast.success("Event deleted successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
-        closeButton: false,
-      });
-      navigate("/dashboard");
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response?.data?.message || "Failed to delete event", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
-        closeButton: false,
-      });
-    }
-  };
-
   return (
     <AddEventTemplate
       formData={formData}
@@ -284,11 +239,6 @@ const AddEvent = () => {
       imagePreview={imagePreview}
       setImagePreview={setImagePreview}
       isEdit={!!eventId}
-      onDelete={() => setIsDeleteModalOpen(true)}
-      isDeleteModalOpen={isDeleteModalOpen}
-      onCloseDeleteModal={() => setIsDeleteModalOpen(false)}
-      onConfirmDelete={handleDelete}
-      deleteLoading={loading}
     />
   );
 };

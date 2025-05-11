@@ -1,5 +1,3 @@
-// src/components/atoms/ThemeToggle.jsx
-import { useEffect, useState } from "react";
 import { Sun, SunMoon } from "lucide-react";
 
 const ThemeToggle = ({ isDark, setIsDark }) => {

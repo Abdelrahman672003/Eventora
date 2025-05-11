@@ -9,14 +9,16 @@ import {
   X,
 } from "lucide-react";
 import Button from "../atoms/Button";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthService } from "../../api/services";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const { logout } = useAuthService();
+  
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark"
   );

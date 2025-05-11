@@ -1,25 +1,23 @@
 import React from "react";
-import { Calendar, MapPin, Clock, X, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import EventCardSmall from "../molecules/EventCardSmall";
+import { EventCardSmall } from "../index";
 
 const ProfileTemplate = ({
   user,
   bookings,
+  bookingsLoading,
+  bookingsError,
+  fetchBookings,
   favorites,
   favoritesLoading,
-  bookingsLoading,
   favoritesError,
-  bookingsError,
-  onUnfavorite,
-  fetchBookings,
+  fetchFavorites,
 }) => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-30 pb-12 max-w-5xl mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* User Profile Section */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8">
           <div className="flex items-center space-x-4">
             <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold">
@@ -34,7 +32,6 @@ const ProfileTemplate = ({
           </div>
         </div>
 
-        {/* Bookings Section */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
             My Bookings
@@ -68,7 +65,6 @@ const ProfileTemplate = ({
                     key={booking.id}
                     booking={booking}
                     event={booking.event}
-                    onViewEvent={() => navigate(`/events/${booking.event.id}`)}
                     showFavoriteButton={false}
                     isBooked={true}
                     fetchBookings={fetchBookings}
@@ -78,7 +74,6 @@ const ProfileTemplate = ({
           )}
         </div>
 
-        {/* Favorites Section */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
             My Favorites
@@ -104,14 +99,12 @@ const ProfileTemplate = ({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {favorites.map((event) => (
+              {favorites?.map((event) => (
                 <EventCardSmall
                   key={event.id}
                   event={event}
-                  onViewEvent={() => navigate(`/events/${event.id}`)}
                   showFavoriteButton={true}
-                  onFavorite={() => onUnfavorite(event.id)}
-                  isFavorite={true}
+                  onFavorite={() => fetchFavorites(event.id)}
                 />
               ))}
             </div>

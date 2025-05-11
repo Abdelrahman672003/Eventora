@@ -7,27 +7,27 @@ import { useEffect, useState } from "react";
 import CancelEventModal from "../modals/CancelEventModal";
 
 const EventCardSmall = ({
+  key,
   event,
   onFavorite,
-  isBooked,
   showFavoriteButton = true,
+  isBooked,
   booking = null,
   fetchBookings,
 }) => {
   const navigate = useNavigate();
   const { cancelBooking, loading: cancelLoading } = useBookingService();
   const { makeFavoriteEvent, removeFavoriteEvent } = useEventService();
+
   const [isFavorite, setIsFavorite] = useState(event.isFavorite || false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsFavorite(event.isFavorite || false);
   }, [event]);
 
   const handleCancelConfirm = async () => {
-    if (!event) return;
-
     try {
       await cancelBooking(booking.id);
       toast.success("Event cancelled successfully!", {
@@ -41,11 +41,11 @@ const EventCardSmall = ({
         theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
         closeButton: false,
       });
-      // Refresh the events list
+
       fetchBookings();
     } catch (err) {
-      console.log(err);
-      toast.error(err.response?.data?.message || "Failed to cancan event", {
+      // console.log(err);
+      toast.error(err?.response?.data?.message || "Failed to cancan event", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
@@ -63,7 +63,6 @@ const EventCardSmall = ({
 
   const handleFavorite = async (e) => {
     e.stopPropagation();
-    if (isLoading) return;
 
     setIsLoading(true);
     try {
@@ -89,7 +88,7 @@ const EventCardSmall = ({
         }
       );
     } catch (err) {
-      console.error("Failed to update favorite status:", err);
+      // console.error("Failed to update favorite status:", err);
       toast.error("Failed to update favorite status", {
         position: "bottom-right",
         autoClose: 5000,
@@ -107,20 +106,23 @@ const EventCardSmall = ({
   };
 
   return (
-    <div className="flex gap-3 bg-white dark:bg-gray-800 rounded shadow-md">
+    <div
+      key={key}
+      className="flex gap-3 bg-white dark:bg-gray-800 rounded shadow-md"
+    >
       <div
         className="relative cursor-pointer"
-        onClick={() => navigate(`/events/${event.id}`)}
+        onClick={() => navigate(`/events/${event?.id}`)}
       >
         <img
-          src={event.image}
-          alt={event.name}
+          src={event?.image}
+          alt={event?.name}
           className="w-46 h-full object-cover rounded"
         />
         <span className="absolute bottom-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
-          {event.category}
+          {event?.category}
         </span>
-        {event.isBooked || isBooked ? (
+        {event?.isBooked || isBooked ? (
           <span className="absolute top-2 left-2 text-xs bg-green-600 text-white px-2 py-1 rounded">
             Booked
           </span>
@@ -146,28 +148,30 @@ const EventCardSmall = ({
         <div>
           <h3
             className="font-semibold text-md mb-1 line-clamp-2 dark:text-white cursor-pointer"
-            onClick={() => navigate(`/events/${event.id}`)}
+            onClick={() => navigate(`/events/${event?.id}`)}
           >
-            {event.name}
+            {event?.name}
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-            {event.date?.split("T")?.at(0)}
+            {event?.date?.split("T")?.at(0)}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-            {event.venue}
+            {event?.venue}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-            {event.interestedCount && (
+            {event?.interestedCount ? (
               <span className="flex items-center gap-1">
                 <Star size={14} className="text-purple-500" />
-                {event.interestedCount} interested
+                {event?.interestedCount} interested
               </span>
+            ) : (
+              ""
             )}
           </p>
         </div>
         <div className="flex justify-between items-center">
           <div className="text-sm font-medium text-green-600">
-            EGP {event.price}
+            EGP {event?.price}
           </div>
           {isBooked ? (
             <Button
@@ -179,7 +183,7 @@ const EventCardSmall = ({
           ) : (
             <Button
               className="bg-primary text-white dark:bg-secondary dark:text-primary"
-              onClick={() => navigate(`/events/${event.id}`)}
+              onClick={() => navigate(`/events/${event?.id}`)}
             >
               See More
             </Button>
@@ -187,7 +191,6 @@ const EventCardSmall = ({
         </div>
       </div>
 
-      {/* Cancel Confirmation Modal */}
       <CancelEventModal
         isOpen={isCancelModalOpen}
         onClose={() => {

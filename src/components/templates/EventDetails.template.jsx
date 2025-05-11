@@ -15,7 +15,7 @@ import { useEventService } from "../../api/services";
 import { useBookingService } from "../../api/services";
 
 const EventDetailsTemplate = ({ event, loading, error }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { makeFavoriteEvent, removeFavoriteEvent } = useEventService();
   const { createNewBooking } = useBookingService();
@@ -33,7 +33,7 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
-      toast("Link copied to clipboard!", {
+      toast.success("Link copied to clipboard!", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
@@ -147,14 +147,12 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
 
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white pb-10 pt-28 max-w-[1200px] mx-auto px-6 md:px-10">
-      {/* Banner */}
       <img
         src={event.image}
         alt={event.name}
         className="w-full h-60 md:h-90 object-cover rounded-lg"
       />
 
-      {/* Title & Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-6 mb-4">
         <h1 className="text-3xl font-bold">{event.name}</h1>
         <div className="flex gap-4 mt-4 md:mt-0">
@@ -173,7 +171,6 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         </div>
       </div>
 
-      {/* Date & Time */}
       <div className="flex flex-col md:flex-row justify-between mb-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-xl font-semibold">
@@ -190,7 +187,6 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
           </div>
         </div>
 
-        {/* Ticket Info */}
         <div className="mt-6 md:mt-0">
           <Button
             className={`${
@@ -214,7 +210,6 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         </div>
       </div>
 
-      {/* Description */}
       <div className="mb-3">
         <h3 className="text-xl font-semibold">Event Description</h3>
         <p className="text-sm leading-relaxed whitespace-pre-line">
@@ -222,7 +217,6 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         </p>
       </div>
 
-      {/* Tags */}
       {event.tags && event.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 text-sm mt-4">
           {event.tags.map((tag, i) => (
@@ -236,7 +230,6 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         </div>
       )}
 
-      {/* Location & Map */}
       <div className="mb-6 mt-6">
         <h3 className="text-xl font-semibold mb-2">Location</h3>
         <p className="text-sm flex items-center gap-2 mb-3">
@@ -256,8 +249,7 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         />
       </div>
 
-      {/* Host Info */}
-      {event.host && (
+      {/* {event.host && (
         <div className="mb-6">
           <h3 className="font-semibold text-xl mb-2">Hosted by</h3>
           <div className="flex items-center gap-4">
@@ -276,7 +268,7 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

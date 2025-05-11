@@ -10,13 +10,12 @@ const RegisterTemplate = ({
   loading,
   error,
 }) => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex bg-gray-50">
-      {/* Left Side */}
       <div className="relative hidden md:flex flex-col justify-center items-center w-2/5 bg-gray-900 text-white px-10 rounded-tr-2xl rounded-br-2xl">
         <ChevronLeft
           className="absolute top-10 left-8 cursor-pointer w-6 h-6"
@@ -29,7 +28,6 @@ const RegisterTemplate = ({
         <p className="text-lg">Create an account to start exploring events!</p>
       </div>
 
-      {/* Right Side */}
       <div className="flex-1 flex items-center justify-center p-6 bg-white rounded-t-3xl md:rounded-none">
         <div className="w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6">Create Your Account</h2>
@@ -39,7 +37,6 @@ const RegisterTemplate = ({
             </div>
           )}
           <form className="space-y-4">
-            {/* Name */}
             <input
               type="text"
               name="name"
@@ -49,7 +46,6 @@ const RegisterTemplate = ({
               className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary shadow-sm placeholder-gray-400 transition"
             />
 
-            {/* Email */}
             <input
               type="email"
               name="email"
@@ -59,7 +55,6 @@ const RegisterTemplate = ({
               className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary shadow-sm placeholder-gray-400 transition"
             />
 
-            {/* Password */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -77,7 +72,6 @@ const RegisterTemplate = ({
               </span>
             </div>
 
-            {/* Confirm Password */}
             <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}

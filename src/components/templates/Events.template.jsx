@@ -1,8 +1,6 @@
 import React from "react";
-import HeroSection from "../organisms/Home/HeroSection";
-import EventCardSmall from "../molecules/EventCardSmall";
+import { EventCardSmall, Button } from "../index";
 import { ChevronDown, Search } from "lucide-react";
-import Button from "../atoms/Button";
 
 const EventsTemplate = ({
   events = [],
@@ -26,7 +24,6 @@ const EventsTemplate = ({
   return (
     <div>
       <main>
-        {/* <HeroSection title={"Search For A Specific Event"} eventsPage /> */}
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 pt-30">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <aside className="md:col-span-1">
@@ -35,7 +32,6 @@ const EventsTemplate = ({
                   Filters
                 </h2>
 
-                {/* Search */}
                 <div className="mb-6">
                   <div className="relative">
                     <input
@@ -52,7 +48,6 @@ const EventsTemplate = ({
                   </div>
                 </div>
 
-                {/* Price Range */}
                 <div className="mb-6">
                   <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     Price Range
@@ -83,7 +78,6 @@ const EventsTemplate = ({
                   </div>
                 </div>
 
-                {/* Categories */}
                 <div className="mb-6">
                   <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     Category
@@ -109,7 +103,6 @@ const EventsTemplate = ({
                   </div>
                 </div>
 
-                {/* Apply Filters Button */}
                 <Button
                   onClick={onApplyFilters}
                   className="w-full bg-primary text-white hover:bg-primary/90 dark:bg-secondary dark:text-primary dark:hover:bg-secondary/90"

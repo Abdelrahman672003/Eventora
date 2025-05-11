@@ -1,9 +1,10 @@
-import "./App.css";
-import AppRoutes from "./routes/AppRoutes";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import AppRoutes from "./routes/AppRoutes";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { ToastContainer, toast } from "react-toastify";
+import "./App.css";
+import { useEffect } from "react";
 
 function App() {
   return (

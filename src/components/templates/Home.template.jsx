@@ -14,12 +14,15 @@ const HomeTemplate = ({ techEvents, sportsEvents, businessEvents }) => {
           {techEvents?.length > 0 && (
             <PopularEvents events={techEvents} title="Top Technology Events" />
           )}
-          <PremiumLoginSection />
+          {!localStorage.getItem("user") && <PremiumLoginSection />}
           {sportsEvents?.length > 0 && (
             <PopularEvents events={sportsEvents} title="Top Sports Events" />
           )}
           {businessEvents?.length > 0 && (
-            <PopularEvents events={businessEvents} title="Top Business Events" />
+            <PopularEvents
+              events={businessEvents}
+              title="Top Business Events"
+            />
           )}
         </div>
       </main>

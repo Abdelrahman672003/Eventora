@@ -1,6 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
-import { Navbar } from "../components";
 import Footer from "../components/organisms/Footer";
 import Events from "../pages/Events";
 import EventDetails from "../pages/EventDetails";
@@ -11,6 +10,7 @@ import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
 import Dashboard from "../pages/Dashboard";
 import AddEvent from "../pages/AddEvent";
+import { Navbar } from "../components";
 
 const AppRoutes = () => (
   <>
