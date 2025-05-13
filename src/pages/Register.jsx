@@ -47,8 +47,7 @@ const Register = () => {
     }
 
     try {
-      const { confirmPassword, ...signupData } = formData;
-      const response = await signup(signupData);
+      const response = await signup(formData);
       if (response.token) {
         navigate("/login");
         localStorage.setItem("token", response.token);
