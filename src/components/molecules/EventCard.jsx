@@ -44,7 +44,6 @@ const EventCard = ({ key, event }) => {
         }
       );
     } catch (err) {
-      // console.error("Failed to update favorite status:", err);
       toast.error("Failed to update favorite status", {
         position: "bottom-right",
         autoClose: 5000,

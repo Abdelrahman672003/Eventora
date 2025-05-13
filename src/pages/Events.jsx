@@ -15,12 +15,19 @@ const Events = () => {
     search: "",
   });
 
+  const [homeFilterDone, setHomeFilterDone] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalEvents, setTotalEvents] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const itemsPerPage = 10;
+
   useEffect(() => {
     document.title = "Eventora - Events";
   }, []);
 
   useEffect(() => {
-    if (location?.state) {
+    if (location?.state && !homeFilterDone) {
       if (location?.state?.category)
         setFilters((prev) => ({
           ...prev,
@@ -31,14 +38,18 @@ const Events = () => {
           ...prev,
           search: location?.state?.search,
         }));
-      fetchEvents({
-        category: [location?.state?.category],
-        search: location?.state?.search,
-      });
+      fetchEvents(
+        {
+          category: [location?.state?.category],
+          search: location?.state?.search,
+        },
+        page > 1
+      );
+      setHomeFilterDone(true);
     } else {
-      fetchEvents();
+      fetchEvents(null, page > 1);
     }
-  }, [location]);
+  }, [location, page]);
 
   const removeAllFilters = () => {
     setFilters({
@@ -48,6 +59,7 @@ const Events = () => {
       search: "",
     });
 
+    setPage(1);
     fetchEvents({
       category: [],
       minPrice: "",
@@ -56,7 +68,12 @@ const Events = () => {
     });
   };
 
-  const fetchEvents = async (state) => {
+  const handleLoadMore = async () => {
+    setPage(page + 1);
+  };
+
+  const fetchEvents = async (state, loadMore = false) => {
+    if (loadMore) setIsLoadingMore(true);
     try {
       const params = state
         ? {
@@ -78,10 +95,22 @@ const Events = () => {
         }
       });
 
-      const data = await getEvents(params);
-      setEvents(data?.events);
+      const data = await getEvents({
+        ...params,
+        page: page,
+        limit: itemsPerPage,
+      });
+      if (loadMore) {
+        setEvents([...events, ...data?.events]);
+      } else {
+        setEvents(data?.events);
+      }
+      setTotalPages(data?.totalPages);
+      setTotalEvents(data?.totalEvents);
+      if (loadMore) setIsLoadingMore(false);
     } catch (err) {
       console.error("Error fetching events:", err);
+      if (loadMore) setIsLoadingMore(false);
     }
   };
 
@@ -99,6 +128,12 @@ const Events = () => {
     }));
   };
 
+  const onApplyFilters = () => {
+    if (page == 1) fetchEvents(filters);
+    else setPage(1);
+    // fetchEvents(filters);
+  };
+
   return (
     <EventsTemplate
       events={events}
@@ -107,8 +142,13 @@ const Events = () => {
       filters={filters}
       onFilterChange={handleFilterChange}
       onSearch={handleSearch}
-      onApplyFilters={fetchEvents}
+      onApplyFilters={onApplyFilters}
       removeAllFilters={removeAllFilters}
+      handleLoadMore={handleLoadMore}
+      isLoadingMore={isLoadingMore}
+      page={page}
+      totalPages={totalPages}
+      totalEvents={totalEvents}
     />
   );
 };

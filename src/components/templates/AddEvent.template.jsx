@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -16,13 +16,13 @@ const AddEventTemplate = ({
   isEdit,
 }) => {
   const navigate = useNavigate();
+  const [tagInput, setTagInput] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
-      console.log(file);
 
       handleChange({
         target: {
@@ -37,7 +37,7 @@ const AddEventTemplate = ({
     handleChange({
       target: {
         name: "date",
-        value: date.toISOString().split('T')[0],
+        value: date.toISOString().split("T")[0],
       },
     });
   };
@@ -51,9 +51,43 @@ const AddEventTemplate = ({
     });
   };
 
+  const handleTagInputChange = (e) => {
+    setTagInput(e.target.value);
+  };
+
+  const addTag = () => {
+    if (tagInput.trim()) {
+      const newTags = [...(formData.tags || []), tagInput.trim()];
+      handleChange({
+        target: {
+          name: "tags",
+          value: newTags,
+        },
+      });
+      setTagInput("");
+    }
+  };
+
+  const handleTagInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTag();
+    }
+  };
+
+  const removeTag = (indexToRemove) => {
+    const newTags = formData.tags.filter((_, index) => index !== indexToRemove);
+    handleChange({
+      target: {
+        name: "tags",
+        value: newTags,
+      },
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-30 pb-12">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-8">
         <div className="mb-8">
           <button
             onClick={() => navigate(-1)}
@@ -167,7 +201,11 @@ const AddEventTemplate = ({
                   Time
                 </label>
                 <DatePicker
-                  selected={formData.time ? new Date(`2000-01-01T${formData.time}`) : null}
+                  selected={
+                    formData.time
+                      ? new Date(`2000-01-01T${formData.time}`)
+                      : null
+                  }
                   onChange={handleTimeChange}
                   showTimeSelect
                   showTimeSelectOnly
@@ -309,6 +347,61 @@ const AddEventTemplate = ({
               {validationErrors.totalTickets && (
                 <p className="mt-1 text-sm text-red-500">
                   {validationErrors.totalTickets}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="tags"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                Tags
+              </label>
+              <div
+                className={`w-full bg-gray-50 border ${
+                  validationErrors.tags ? "border-red-500" : "border-gray-200"
+                } rounded-xl px-4 py-3 text-sm focus-within:ring-2 focus-within:ring-secondary shadow-sm transition dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+              >
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {formData.tags?.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary/10 text-primary"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(index)}
+                        className="ml-2 text-primary hover:text-primary/80"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    id="tags"
+                    value={tagInput}
+                    onChange={handleTagInputChange}
+                    onKeyDown={handleTagInputKeyDown}
+                    className="flex-1 bg-transparent border-none focus:outline-none"
+                    placeholder="Type a tag and press Enter"
+                  />
+                  <button
+                    type="button"
+                    onClick={addTag}
+                    className="px-3 py-1 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+              {validationErrors.tags && (
+                <p className="mt-1 text-sm text-red-500">
+                  {validationErrors.tags}
                 </p>
               )}
             </div>

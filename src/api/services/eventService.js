@@ -3,8 +3,8 @@ import useApi from "../hooks/useApi";
 export const useEventService = () => {
   const api = useApi();
 
-  const getEvents = async (params = {}) => {
-    return api.get("/events", { params });
+  const getEvents = async (params) => {
+    return api.get("/events", { params: params });
   };
 
   const getEventById = async (id) => {

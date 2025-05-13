@@ -7,10 +7,21 @@ const Dashboard = () => {
   const [events, setEvents] = useState([]);
   const { getEvents, deleteEvent, loading, error } = useEventService();
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalEvents, setTotalEvents] = useState(0);
+  const itemsPerPage = 10;
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
   const fetchEvents = async () => {
     try {
-      const data = await getEvents();
+      const data = await getEvents({ page: page, limit: itemsPerPage });
       setEvents(data?.events);
+      setTotalPages(data?.totalPages);
+      setTotalEvents(data?.totalEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
     }
@@ -26,7 +37,7 @@ const Dashboard = () => {
     }
 
     fetchEvents();
-  }, [navigate]);
+  }, [navigate, page]);
 
   return (
     <DashboardTemplate
@@ -35,6 +46,12 @@ const Dashboard = () => {
       error={error}
       deleteEvent={deleteEvent}
       fetchEvents={fetchEvents}
+      page={page}
+      setPage={setPage}
+      totalPages={totalPages}
+      totalEvents={totalEvents}
+      itemsPerPage={itemsPerPage}
+      handlePageChange={handlePageChange}
     />
   );
 };

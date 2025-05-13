@@ -7,13 +7,8 @@ import { AddEventTemplate } from "../components";
 const AddEvent = () => {
   const navigate = useNavigate();
   const { eventId } = useParams();
-  const {
-    createEvent,
-    updateEvent,
-    getEventById,
-    loading,
-    error,
-  } = useEventService();
+  const { createEvent, updateEvent, getEventById, loading, error } =
+    useEventService();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,6 +20,7 @@ const AddEvent = () => {
     price: "",
     image: null,
     totalTickets: "",
+    tags: [],
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
@@ -55,6 +51,7 @@ const AddEvent = () => {
         price: event.price,
         totalTickets: event.totalTickets,
         image: null,
+        tags: event.tags,
       });
       setImagePreview(event.image);
     } catch (err) {
@@ -181,7 +178,11 @@ const AddEvent = () => {
 
     try {
       if (eventId) {
-        await updateEvent(eventId, formData);
+        const data = {
+          ...formData,
+          tags: formData.tags.length > 0 ? formData.tags : "",
+        };
+        await updateEvent(eventId, data);
         toast.success("Event updated successfully!", {
           position: "bottom-right",
           autoClose: 5000,
@@ -209,7 +210,6 @@ const AddEvent = () => {
       }
       navigate("/dashboard");
     } catch (err) {
-      console.log(err);
       toast.error(
         err.response?.data?.message ||
           (eventId ? "Failed to update event" : "Failed to create event"),

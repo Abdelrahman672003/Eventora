@@ -19,7 +19,6 @@ const EventDetails = () => {
       const data = await getEventById(id);
       setEvent(data);
     } catch (err) {
-      console.error("Error fetching event details:", err);
       toast.error("Failed to fetch event details", {
         position: "bottom-right",
         autoClose: 5000,

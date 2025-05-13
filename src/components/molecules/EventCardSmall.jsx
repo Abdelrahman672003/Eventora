@@ -44,7 +44,6 @@ const EventCardSmall = ({
 
       fetchBookings();
     } catch (err) {
-      // console.log(err);
       toast.error(err?.response?.data?.message || "Failed to cancan event", {
         position: "bottom-right",
         autoClose: 5000,
@@ -88,7 +87,6 @@ const EventCardSmall = ({
         }
       );
     } catch (err) {
-      // console.error("Failed to update favorite status:", err);
       toast.error("Failed to update favorite status", {
         position: "bottom-right",
         autoClose: 5000,

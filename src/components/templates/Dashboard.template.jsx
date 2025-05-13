@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Calendar, Plus, Trash2, Edit, MapPin, Clock } from "lucide-react";
+import {
+  Calendar,
+  Plus,
+  Trash2,
+  Edit,
+  MapPin,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DeleteEventModal from "../modals/DeleteEventModal";
 import { toast } from "react-toastify";
@@ -10,6 +19,11 @@ const DashboardTemplate = ({
   error,
   deleteEvent,
   fetchEvents,
+  page,
+  totalPages,
+  totalEvents,
+  itemsPerPage,
+  handlePageChange,
 }) => {
   const navigate = useNavigate();
 
@@ -42,7 +56,6 @@ const DashboardTemplate = ({
 
       fetchEvents();
     } catch (err) {
-      console.log(err);
       toast.error(err.response?.data?.message || "Failed to delete event", {
         position: "bottom-right",
         autoClose: 5000,
@@ -63,8 +76,8 @@ const DashboardTemplate = ({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-30 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Event Management
@@ -75,7 +88,7 @@ const DashboardTemplate = ({
           </div>
           <button
             onClick={() => navigate("/dashboard/add")}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer"
+            className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer"
           >
             <Plus className="h-5 w-5 mr-2" />
             Add New Event
@@ -203,6 +216,48 @@ const DashboardTemplate = ({
                   ))}
                 </tbody>
               </table>
+
+              <div className="flex flex-col md:flex-row items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center">
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Showing <span className="font-medium">{page}</span> to{" "}
+                    <span className="font-medium">
+                      {Math.min(page + itemsPerPage, totalEvents)}
+                    </span>{" "}
+                    of <span className="font-medium">{totalEvents}</span>{" "}
+                    results
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2 mt-2 md:mt-0">
+                  <button
+                    onClick={() => handlePageChange(page - 1)}
+                    disabled={page === 1}
+                    className="inline-flex cursor-pointer items-center px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index + 1}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`inline-flex items-center px-3 py-1 border rounded-md text-sm font-medium cursor-pointer ${
+                        page === index + 1
+                          ? "bg-primary text-white border-primary"
+                          : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      }`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => handlePageChange(page + 1)}
+                    disabled={page === totalPages}
+                    className="inline-flex cursor-pointer items-center px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -150,13 +150,13 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white pb-10 pt-28 max-w-[1200px] mx-auto px-6 md:px-10">
       <img
-        src={event.image}
-        alt={event.name}
+        src={event?.image}
+        alt={event?.name}
         className="w-full h-60 md:h-90 object-cover rounded-lg"
       />
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-6 mb-4">
-        <h1 className="text-3xl font-bold">{event.name}</h1>
+        <h1 className="text-3xl font-bold">{event?.name}</h1>
         <div className="flex gap-4 mt-4 md:mt-0">
           <button
             onClick={handleFavorite}
@@ -176,16 +176,16 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
       <div className="flex flex-col md:flex-row justify-between mb-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-xl font-semibold">
-            <CircleDollarSign /> Ticket Price: EGP {event.price}
+            <CircleDollarSign /> Ticket Price: EGP {event?.price}
           </div>
           <div className="flex items-center gap-2 text-md font-semibold">
-            <CalendarDays /> {event.date?.split("T")?.at(0)}
+            <CalendarDays /> {event?.date?.split("T")?.at(0)}
           </div>
           <div className="flex items-center gap-2 text-md font-semibold">
-            <Clock /> {event.time}
+            <Clock /> {event?.time}
           </div>
           <div className="flex items-center gap-2 text-md font-semibold">
-            <Tickets /> {event.category}
+            <Tickets /> {event?.category}
           </div>
         </div>
 
@@ -215,31 +215,34 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
       <div className="mb-3">
         <h3 className="text-xl font-semibold">Event Description</h3>
         <p className="text-sm leading-relaxed whitespace-pre-line">
-          {event.description}
+          {event?.description}
         </p>
       </div>
 
-      {event.tags && event.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 text-sm mt-4">
-          {event.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full"
-            >
-              #{tag}
-            </span>
-          ))}
+      {event?.tags && event?.tags?.length > 0 && (
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold mb-2">Tags</h3>
+          <div className="flex flex-wrap gap-2">
+            {event?.tags?.map((tag, i) => (
+              <span
+                key={i}
+                className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
         </div>
       )}
 
       <div className="mb-6 mt-6">
         <h3 className="text-xl font-semibold mb-2">Location</h3>
         <p className="text-sm flex items-center gap-2 mb-3">
-          <MapPin /> {event.venue}
+          <MapPin /> {event?.venue}
         </p>
         <iframe
           src={
-            event.mapSrc ??
+            event?.mapSrc ??
             "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.870703087366!2d72.83276531490098!3d19.076090787088576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ce5e26b88d43%3A0x888ab4950b3ab0f9!2sBalgandharva%20Rang%20Mandir!5e0!3m2!1sen!2sin!4v1700000000000"
           }
           width="100%"

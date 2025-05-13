@@ -11,6 +11,11 @@ const EventsTemplate = ({
   onSearch,
   onApplyFilters,
   removeAllFilters,
+  handleLoadMore,
+  isLoadingMore,
+  page,
+  totalPages,
+  totalEvents,
 }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const categories = [
@@ -149,7 +154,7 @@ const EventsTemplate = ({
             </aside>
 
             <section className="md:col-span-3 mb-4">
-              {loading ? (
+              {loading && page === 1 ? (
                 <div className="flex justify-center items-center h-64">
                   <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                 </div>
@@ -166,6 +171,28 @@ const EventsTemplate = ({
                   {events?.map((event, idx) => (
                     <EventCardSmall key={event.id || idx} event={event} />
                   ))}
+                </div>
+              )}
+
+              {totalEvents > events?.length && (
+                <div className="mt-8 flex justify-center">
+                  <Button
+                    onClick={handleLoadMore}
+                    disabled={isLoadingMore}
+                    className="bg-primary text-white hover:bg-primary/90 dark:bg-secondary dark:text-primary dark:hover:bg-secondary/90 px-6 py-2 rounded-md flex items-center gap-2"
+                  >
+                    {isLoadingMore ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        See More Events
+                        <ChevronDown size={18} />
+                      </>
+                    )}
+                  </Button>
                 </div>
               )}
             </section>

@@ -5,7 +5,7 @@ import { useBookingService, useEventService } from "../api/services";
 
 const Profile = () => {
   const navigate = useNavigate();
-  
+
   const [user, setUser] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [favorites, setFavorites] = useState([]);
