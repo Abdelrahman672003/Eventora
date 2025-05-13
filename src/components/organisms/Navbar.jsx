@@ -18,7 +18,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const { logout } = useAuthService();
-  
+
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark"
   );
@@ -217,6 +217,18 @@ const Navbar = () => {
             </button>
           </div>
           <div className="p-4 space-y-4">
+            {JSON.parse(localStorage.getItem("user"))?.role == "admin" && (
+              <button
+                onClick={() => handleNavigation("/dashboard")}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  location?.pathname === "/dashboard"
+                    ? "bg-primary text-white"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
+              >
+                Dashboard
+              </button>
+            )}
             <button
               onClick={() => handleNavigation("/")}
               className={`w-full text-left px-4 py-2 rounded-lg ${
@@ -247,18 +259,6 @@ const Navbar = () => {
             >
               About
             </button>
-            {JSON.parse(localStorage.getItem("user"))?.role == "user" && (
-              <button
-                onClick={() => handleNavigation("/profile")}
-                className={`w-full text-left px-4 py-2 rounded-lg ${
-                  location?.pathname === "/profile"
-                    ? "bg-primary text-white"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                }`}
-              >
-                My Tickets
-              </button>
-            )}
             <button
               onClick={() => handleNavigation("/contact")}
               className={`w-full text-left px-4 py-2 rounded-lg ${
@@ -269,6 +269,18 @@ const Navbar = () => {
             >
               Contact
             </button>
+            {localStorage.getItem("user") && (
+              <button
+                onClick={() => handleNavigation("/profile")}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  location?.pathname === "/profile"
+                    ? "bg-primary text-white"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
+              >
+                My Booking
+              </button>
+            )}
           </div>
         </div>
       </div>

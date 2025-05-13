@@ -106,7 +106,10 @@ const EventCardSmall = ({
   };
 
   return (
-    <div key={key} className="flex bg-white dark:bg-gray-800 rounded shadow-md">
+    <div
+      key={key}
+      className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded shadow-md"
+    >
       <div
         className="relative cursor-pointer"
         onClick={() => navigate(`/events/${event?.id}`)}
@@ -114,7 +117,7 @@ const EventCardSmall = ({
         <img
           src={event?.image}
           alt={event?.name}
-          className="w-46 h-full object-cover rounded"
+          className="w-full md:w-46 h-40 md:h-full object-cover rounded"
         />
         <span className="absolute bottom-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded max-w-[90%] truncate">
           {event?.category}
@@ -141,21 +144,34 @@ const EventCardSmall = ({
           </button>
         )}
       </div>
-      <div className="flex flex-col p-4 justify-between w-4/6">
+      <div className="flex flex-col p-4 justify-between md:w-4/6">
         <div>
+          <div className="text-sm text-gray-500 font-bold mb-1">
+            {event?.date?.split("T")[0]}
+          </div>
           <h3
             className="font-semibold text-md mb-1 line-clamp-2 dark:text-white cursor-pointer"
             onClick={() => navigate(`/events/${event?.id}`)}
           >
             {event?.name}
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-            {event?.date?.split("T")?.at(0)}
-          </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
             {event?.venue}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+          <div className="flex items-center justify-between gap-4 block md:hidden">
+            <span className="text-sm font-medium text-green-600">
+              EGP {event?.price}
+            </span>
+            {event?.interestedCount ? (
+              <span className="flex text-sm text-gray-500 dark:text-gray-400 items-center gap-1">
+                <Star size={14} className="text-purple-500" />
+                {event?.interestedCount} interested
+              </span>
+            ) : (
+              ""
+            )}
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 hidden md:block">
             {event?.interestedCount ? (
               <span className="flex items-center gap-1">
                 <Star size={14} className="text-purple-500" />
@@ -166,20 +182,20 @@ const EventCardSmall = ({
             )}
           </p>
         </div>
-        <div className="flex justify-between items-center">
-          <div className="text-sm font-medium text-green-600">
+        <div className="flex flex-col md:flex-row justify-between md:items-center">
+          <div className="text-sm font-medium text-green-600 hidden md:block">
             EGP {event?.price}
           </div>
           {isBooked ? (
             <Button
-              className="bg-red-700 hover:bg-red-600 text-white"
+              className="bg-red-700 hover:bg-red-600 text-white mt-2 md:mt-0"
               onClick={() => setIsCancelModalOpen(true)}
             >
               Cancel
             </Button>
           ) : (
             <Button
-              className="bg-primary text-white dark:bg-secondary dark:text-primary"
+              className="bg-primary text-white dark:bg-secondary dark:text-primary mt-2 md:mt-0"
               onClick={() => navigate(`/events/${event?.id}`)}
             >
               See More

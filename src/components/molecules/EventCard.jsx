@@ -113,7 +113,7 @@ const EventCard = ({ key, event }) => {
               EGP {event?.price}
             </span>
             {event?.interestedCount ? (
-              <span className="flex items-center gap-1">
+              <span className="flex text-sm text-gray-500 dark:text-gray-400 items-center gap-1">
                 <Star size={14} className="text-purple-500" />
                 {event?.interestedCount} interested
               </span>

@@ -1,6 +1,7 @@
 // Base images
 import logo5 from "./logo (5).svg";
 import logo6 from "./logo (6).svg";
+import logo1 from "./1.svg";
 
 import videoBack from "./back.webm";
 
@@ -14,6 +15,7 @@ import category6 from "./categories/Image (10).webp";
 // Icons
 
 export {
+  logo1,
   logo5,
   logo6,
   videoBack,

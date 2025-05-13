@@ -13,7 +13,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-gray-900 text-white px-8 py-12 rounded-t-3xl mt-16 overflow-hidden dark:bg-primary">
+    <footer className="relative bg-gray-900 text-white px-8 py-12 rounded-t-3xl mt-8 overflow-hidden dark:bg-primary">
       <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-8">
         <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-6">
           <div>
@@ -125,7 +125,7 @@ const Footer = () => {
             <img
               src={logo5}
               alt=""
-              className="h-16"
+              className="h-16 mt-4"
               onClick={() => navigate("/")}
             />
           </div>

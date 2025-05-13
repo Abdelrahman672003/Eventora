@@ -13,6 +13,7 @@ import Button from "../atoms/Button";
 import { toast } from "react-toastify";
 import { useEventService } from "../../api/services";
 import { useBookingService } from "../../api/services";
+import { logo1, logo5, logo6 } from "../../assets";
 
 const EventDetailsTemplate = ({ event, loading, error }) => {
   const navigate = useNavigate();
@@ -250,26 +251,21 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         />
       </div>
 
-      {/* {event.host && (
-        <div className="mb-6">
-          <h3 className="font-semibold text-xl mb-2">Hosted by</h3>
-          <div className="flex items-center gap-4">
-            {event.host.logo && (
-              <img
-                src={event.host.logo}
-                alt="host"
-                className="w-15 h-15 rounded-full"
-              />
-            )}
-            <div>
-              <p className="font-medium">{event.host.name}</p>
-              <div className="text-sm text-blue-600 cursor-pointer">
-                Contact
-              </div>
+      <div className="mb-6">
+        <h3 className="font-semibold text-xl mb-2">Added by</h3>
+        <div className="flex items-center gap-4">
+          <img src={logo1} alt="host" className="w-15 h-15 rounded-full" />
+          <div>
+            <p className="font-medium">Eventora System</p>
+            <div
+              className="text-sm text-blue-600 cursor-pointer"
+              onClick={() => navigate("/contact")}
+            >
+              Contact
             </div>
           </div>
         </div>
-      )} */}
+      </div>
     </div>
   );
 };

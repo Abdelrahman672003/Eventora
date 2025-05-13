@@ -17,7 +17,7 @@ const SearchBar = ({ placeholder = "Search Events, Online events ..." }) => {
   };
 
   return (
-    <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-lg px-6 py-4 w-full max-w-[80%] md:max-w-2xl bg-white shadow-sm mt-8">
+    <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-lg px-6 py-4 w-full max-w-[100%] md:max-w-2xl bg-white shadow-sm mt-8">
       <Search
         className="text-gray-500 mr-2 cursor-pointer"
         size={25}

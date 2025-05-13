@@ -7,12 +7,12 @@ const PopularEvents = ({ events, title }) => {
   return (
     <section className="py-12 bg-white dark:bg-gray-900">
       <div className="max-w-[1200px] mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <h2 className="text-2xl font-bold text-start text-primary dark:text-white">
             {title}
           </h2>
           <Button
-            className="bg-primary text-white px-8 dark:bg-secondary dark:text-primary"
+            className="bg-primary text-white px-8 dark:bg-secondary dark:text-primary mt-4 md:mt-0"
             onClick={() => navigate("/events")}
           >
             See All Events

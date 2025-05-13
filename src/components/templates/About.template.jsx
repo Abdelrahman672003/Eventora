@@ -55,7 +55,7 @@ const AboutTemplate = () => {
         </div>
       </div>
 
-      <div className="pb-20 bg-white dark:bg-gray-900">
+      <div className="pb-8 md:pb-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-4 md:gap-16 items-center">
             <div className="relative h-full w-full">

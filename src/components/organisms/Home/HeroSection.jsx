@@ -24,11 +24,7 @@ const HeroSection = ({
       )}
 
       <div
-        className={`pt-40 px-10 md:px-20 py-16 relative z-10 flex flex-col items-center justify-center text-white text-center ${
-          eventsPage
-            ? "bg-gray-900"
-            : "bg-[#000000aa]"
-        } h-[${eventsPage ? "300px" : "500px"}]`}
+        className={`pt-40 px-10 md:px-20 py-16 relative z-10 flex flex-col items-center justify-center text-white text-center bg-[#000000aa] h-[500px]`}
       >
         <h1 className="text-4xl md:text-5xl font-bold">{title}</h1>
         <SearchBar />
