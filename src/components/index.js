@@ -7,6 +7,7 @@ export { default as SearchBar } from "./atoms/SearchBar";
 export { default as Card } from "./molecules/Card";
 export { default as EventCard } from "./molecules/EventCard";
 export { default as PremiumLoginSection } from "./molecules/PremiumLoginSection";
+export { default as EventJourneySection } from "./molecules/EventJourney";
 export { default as EventCardSmall } from "./molecules/EventCardSmall";
 
 // Organisms

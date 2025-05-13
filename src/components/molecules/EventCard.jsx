@@ -1,11 +1,12 @@
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
-import { useEventService } from "../../api/services";
+import { useEventService, useBookingService } from "../../api/services";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import CancelEventModal from "../modals/CancelEventModal";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ key, event }) => {
   const navigate = useNavigate();
   const { makeFavoriteEvent, removeFavoriteEvent } = useEventService();
 
@@ -61,7 +62,10 @@ const EventCard = ({ event }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden w-full md:max-w-sm">
+    <div
+      key={key}
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden w-full md:max-w-sm"
+    >
       <div
         className="relative h-40 cursor-pointer"
         onClick={() => navigate(`/events/${event?.id}`)}
@@ -105,14 +109,19 @@ const EventCard = ({ event }) => {
         </p>
         <div className="text-xs text-gray-500 mt-2 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <span>EGP {event?.price}</span>
-            {event?.interestedCount && (
+            <span className="text-sm font-medium text-green-600">
+              EGP {event?.price}
+            </span>
+            {event?.interestedCount ? (
               <span className="flex items-center gap-1">
                 <Star size={14} className="text-purple-500" />
                 {event?.interestedCount} interested
               </span>
+            ) : (
+              ""
             )}
           </div>
+
           <Button
             className="bg-primary text-white dark:bg-secondary dark:text-primary"
             onClick={() => navigate(`/events/${event?.id}`)}

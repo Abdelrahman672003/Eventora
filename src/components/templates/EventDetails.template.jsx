@@ -15,7 +15,7 @@ import { useEventService } from "../../api/services";
 import { useBookingService } from "../../api/services";
 
 const EventDetailsTemplate = ({ event, loading, error }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { makeFavoriteEvent, removeFavoriteEvent } = useEventService();
   const { createNewBooking } = useBookingService();
@@ -108,6 +108,7 @@ const EventDetailsTemplate = ({ event, loading, error }) => {
         theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
         closeButton: false,
       });
+      navigate("/congratulations");
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to book event", {
         position: "bottom-right",

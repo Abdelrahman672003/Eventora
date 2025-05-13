@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { EventCardSmall, Button } from "../index";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, Filter } from "lucide-react";
 
 const EventsTemplate = ({
   events = [],
@@ -12,6 +12,7 @@ const EventsTemplate = ({
   onApplyFilters,
   removeAllFilters,
 }) => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const categories = [
     "Entertainment",
     "Educational & Business",
@@ -25,8 +26,24 @@ const EventsTemplate = ({
     <div>
       <main>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 pt-30">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-            <aside className="md:col-span-1">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+            {/* Mobile Filter Toggle Button */}
+            <div className="md:hidden">
+              <Button
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+                className="w-full flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 dark:bg-secondary dark:text-primary dark:hover:bg-secondary/90"
+              >
+                <Filter size={18} />
+                {isFilterOpen ? "Hide Filters" : "Show Filters"}
+              </Button>
+            </div>
+
+            {/* Filter Panel */}
+            <aside
+              className={`md:col-span-1 ${
+                isFilterOpen ? "block" : "hidden"
+              } md:block`}
+            >
               <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
                 <h2 className="text-lg font-semibold mb-4 dark:text-white">
                   Filters
@@ -39,6 +56,12 @@ const EventsTemplate = ({
                       placeholder="Search events..."
                       value={filters.search}
                       onChange={(e) => onSearch(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          onApplyFilters();
+                          setIsFilterOpen(false);
+                        }
+                      }}
                       className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                     <Search
@@ -104,13 +127,20 @@ const EventsTemplate = ({
                 </div>
 
                 <Button
-                  onClick={onApplyFilters}
+                  onClick={() => {
+                    onApplyFilters();
+                    setIsFilterOpen(false);
+                  }}
                   className="w-full bg-primary text-white hover:bg-primary/90 dark:bg-secondary dark:text-primary dark:hover:bg-secondary/90"
                 >
                   Apply Filters
                 </Button>
                 <Button
-                  onClick={removeAllFilters}
+                  onClick={() => {
+                    removeAllFilters();
+                    setIsFilterOpen(false);
+                    // onApplyFilters();
+                  }}
                   className="mt-2 w-full bg-gray-900 text-white hover:bg-gray-800 dark:bg-secondary dark:text-primary dark:hover:bg-secondary/90"
                 >
                   Remove All Filters

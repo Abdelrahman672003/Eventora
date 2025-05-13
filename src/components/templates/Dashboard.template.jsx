@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import {
-  Calendar,
-  Plus,
-  Trash2,
-  Edit,
-  MapPin,
-  Clock,
-} from "lucide-react";
+import { Calendar, Plus, Trash2, Edit, MapPin, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DeleteEventModal from "../modals/DeleteEventModal";
 import { toast } from "react-toastify";
 
-const DashboardTemplate = ({ events = [], loading, error, deleteEvent, fetchEvents }) => {
+const DashboardTemplate = ({
+  events = [],
+  loading,
+  error,
+  deleteEvent,
+  fetchEvents,
+}) => {
   const navigate = useNavigate();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -131,13 +130,17 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent, fetchEven
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
-                              className="h-10 w-10 rounded-lg object-cover"
+                              className="h-10 w-10 rounded-lg object-cover cursor-pointer"
                               src={event?.image}
                               alt={event?.name}
+                              onClick={() => navigate(`/events/${event?.id}`)}
                             />
                           </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">
+                          <div
+                            className="ml-4 cursor-pointer"
+                            onClick={() => navigate(`/events/${event?.id}`)}
+                          >
+                            <div className="text-sm font-medium text-gray-900 dark:text-white max-w-[250px] w-full truncate">
                               {event?.name}
                             </div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -157,9 +160,11 @@ const DashboardTemplate = ({ events = [], loading, error, deleteEvent, fetchEven
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center text-sm text-gray-900 dark:text-white">
+                        <div className="flex items-center text-sm text-gray-900 dark:text-white text-ellipsis">
                           <MapPin className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" />
-                          {event?.venue}
+                          <span className="w-[200px] truncate">
+                            {event?.venue}
+                          </span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

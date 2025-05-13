@@ -106,10 +106,7 @@ const EventCardSmall = ({
   };
 
   return (
-    <div
-      key={key}
-      className="flex gap-3 bg-white dark:bg-gray-800 rounded shadow-md"
-    >
+    <div key={key} className="flex bg-white dark:bg-gray-800 rounded shadow-md">
       <div
         className="relative cursor-pointer"
         onClick={() => navigate(`/events/${event?.id}`)}
@@ -119,7 +116,7 @@ const EventCardSmall = ({
           alt={event?.name}
           className="w-46 h-full object-cover rounded"
         />
-        <span className="absolute bottom-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded">
+        <span className="absolute bottom-2 left-2 text-xs bg-secondary text-black px-2 py-1 rounded max-w-[90%] truncate">
           {event?.category}
         </span>
         {event?.isBooked || isBooked ? (
@@ -144,7 +141,7 @@ const EventCardSmall = ({
           </button>
         )}
       </div>
-      <div className="flex flex-col p-4 pl-3 justify-between w-4/6">
+      <div className="flex flex-col p-4 justify-between w-4/6">
         <div>
           <h3
             className="font-semibold text-md mb-1 line-clamp-2 dark:text-white cursor-pointer"

@@ -1,6 +1,8 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddEventTemplate = ({
   formData,
@@ -29,6 +31,24 @@ const AddEventTemplate = ({
         },
       });
     }
+  };
+
+  const handleDateChange = (date) => {
+    handleChange({
+      target: {
+        name: "date",
+        value: date.toISOString().split('T')[0],
+      },
+    });
+  };
+
+  const handleTimeChange = (time) => {
+    handleChange({
+      target: {
+        name: "time",
+        value: time.toTimeString().slice(0, 5),
+      },
+    });
   };
 
   return (
@@ -122,16 +142,16 @@ const AddEventTemplate = ({
                 >
                   Date
                 </label>
-                <input
-                  type="date"
-                  id="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  required
+                <DatePicker
+                  selected={formData.date ? new Date(formData.date) : null}
+                  onChange={handleDateChange}
+                  dateFormat="MMMM d, yyyy"
                   className={`w-full bg-gray-50 border ${
                     validationErrors.date ? "border-red-500" : "border-gray-200"
                   } rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary shadow-sm placeholder-gray-400 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+                  placeholderText="Select date"
+                  required
+                  minDate={new Date()}
                 />
                 {validationErrors.date && (
                   <p className="mt-1 text-sm text-red-500">
@@ -146,16 +166,19 @@ const AddEventTemplate = ({
                 >
                   Time
                 </label>
-                <input
-                  type="time"
-                  id="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleChange}
-                  required
+                <DatePicker
+                  selected={formData.time ? new Date(`2000-01-01T${formData.time}`) : null}
+                  onChange={handleTimeChange}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption="Time"
+                  dateFormat="h:mm aa"
                   className={`w-full bg-gray-50 border ${
                     validationErrors.time ? "border-red-500" : "border-gray-200"
                   } rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary shadow-sm placeholder-gray-400 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+                  placeholderText="Select time"
+                  required
                 />
                 {validationErrors.time && (
                   <p className="mt-1 text-sm text-red-500">

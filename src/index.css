@@ -26,6 +26,10 @@
   @apply dark:text-secondary dark:border-secondary border-b-2 block h-full py-[21px];
 }
 
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
 * {
   transition: background-color 0.3s ease, color 0.1s ease;
 }

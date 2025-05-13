@@ -17,9 +17,15 @@ const Congratulations = () => {
         </p>
         <Button
           onClick={() => navigate("/")}
-          className="bg-secondary text-primary"
+          className="bg-secondary text-primary mx-1"
         >
           Back to Home
+        </Button>
+        <Button
+          onClick={() => navigate("/profile")}
+          className="bg-secondary text-primary mx-1"
+        >
+          My Booking
         </Button>
       </div>
     </div>

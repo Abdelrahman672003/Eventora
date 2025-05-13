@@ -11,9 +11,11 @@ import Profile from "../pages/Profile";
 import Dashboard from "../pages/Dashboard";
 import AddEvent from "../pages/AddEvent";
 import { Navbar } from "../components";
+import ScrollToTop from "../helpers/ScrollToTop";
 
 const AppRoutes = () => (
   <>
+    <ScrollToTop />
     <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />

@@ -1,20 +1,20 @@
-import useApi from '../hooks/useApi';
+import useApi from "../hooks/useApi";
 
 export const useAuthService = () => {
   const api = useApi();
 
   const login = async (credentials) => {
-    return api.post('/auth/login', credentials);
+    return api.post("/auth/login", credentials);
   };
 
   const signup = async (userData) => {
-    return api.post('/auth/signup', userData);
+    return api.post("/auth/signup", userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
   };
 
   return {
@@ -24,4 +24,4 @@ export const useAuthService = () => {
     signup,
     logout,
   };
-}; 
+};

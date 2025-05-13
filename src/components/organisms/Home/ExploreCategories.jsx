@@ -42,14 +42,16 @@ const ExploreCategories = () => {
       <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-primary dark:text-white">
         Explore Categories
       </h2>
-      <div className="max-w-[1200px] mx-auto flex flex-wrap justify-center gap-10 mt-4">
+      <div className="max-w-[1100px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mt-4">
         {categories.map((category, index) => (
           <div
             key={index}
-            className="flex flex-col items-center text-center cursor-pointer"
-            onClick={() => navigate("/events")}
+            className="flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform duration-200"
+            onClick={() =>
+              navigate(`/events`, { state: { category: category?.title } })
+            }
           >
-            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden shadow-md hover:shadow-2xl">
+            <div className="w-28 h-28 sm:w-28 sm:h-28 md:w-30 md:h-30 rounded-full overflow-hidden shadow-md hover:shadow-2xl">
               <img
                 src={category?.image}
                 alt={category?.title}

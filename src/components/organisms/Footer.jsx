@@ -42,19 +42,29 @@ const Footer = () => {
             <ul className="space-y-2 text-sm sm:mt-0">
               <li
                 className="cursor-pointer hover:text-secondary transition-colors"
-                onClick={() => navigate("/events")}
+                onClick={() =>
+                  navigate("/events", { state: { category: "Entertainment" } })
+                }
               >
                 Entertainment Events
               </li>
               <li
                 className="cursor-pointer hover:text-secondary transition-colors"
-                onClick={() => navigate("/events")}
+                onClick={() =>
+                  navigate("/events", {
+                    state: { category: "Educational & Business" },
+                  })
+                }
               >
                 Educational & Business Events
               </li>
               <li
                 className="cursor-pointer hover:text-secondary transition-colors"
-                onClick={() => navigate("/events")}
+                onClick={() =>
+                  navigate("/events", {
+                    state: { category: "Cultural & Arts" },
+                  })
+                }
               >
                 Cultural & Arts Events
               </li>
@@ -64,19 +74,31 @@ const Footer = () => {
             <ul className="space-y-2 text-sm hidden md:block sm:mt-0">
               <li
                 className="cursor-pointer hover:text-secondary transition-colors"
-                onClick={() => navigate("/events")}
+                onClick={() =>
+                  navigate("/events", {
+                    state: { category: "Sports & Fitness" },
+                  })
+                }
               >
                 Sports & Fitness Events
               </li>
               <li
                 className="cursor-pointer hover:text-secondary transition-colors"
-                onClick={() => navigate("/events")}
+                onClick={() =>
+                  navigate("/events", {
+                    state: { category: "Technology & Innovation" },
+                  })
+                }
               >
                 Technology & Innovation Events
               </li>
               <li
                 className="cursor-pointer hover:text-secondary transition-colors"
-                onClick={() => navigate("/events")}
+                onClick={() =>
+                  navigate("/events", {
+                    state: { category: "Travel & Adventure" },
+                  })
+                }
               >
                 Travel & Adventure Events
               </li>

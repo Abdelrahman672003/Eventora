@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { EventCardSmall } from "../index";
+import { EventCard, EventCardSmall } from "../index";
 
 const ProfileTemplate = ({
   user,
